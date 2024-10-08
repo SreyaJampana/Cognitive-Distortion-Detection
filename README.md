@@ -25,6 +25,9 @@ Another important step in pre-processing was over sampling the data. Since the d
 
 **Training the Model**
 
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 001](https://github.com/user-attachments/assets/e3d50b2d-f52d-4914-a895-a8972bd0ccf7)
+
+
 To build the model with the highest accuracy, several training approaches were tested. 4 different models were built, from which the one with the highest accuracy was used. The primary model was a simple rule-based one. The rule-based model operated on key-words found for each cognitive distortion. The key words were identified using WordClouds. However due to the lack of context and simplicity of the model, the accuracy was extremely low. The next model tested was logistic regression.[<sup>9</sup>](#bookmark=kix.205qec7v82im). This model is typically advantageous in distinguishing between two classes. Hence, for training a model on cognitive distortions it was ineffective and only had an accuracy of 24%. 
 
 Finally, BERT was used to identify cognitive distortions. In the first test DistillBert was used with the original data set in order to save on RAM usage. However, the accuracy remained low at 35%. Then the data was oversampled, increasing the data points. A full fledged BERT-base architecture was also utilized. The AdamW optimizer was employed with a learning rate of 5e-5, a crucial hyperparameter that governs the model's learning pace. A learning rate scheduler was also utilized to adjust the rate during training for enhanced convergence. The model was trained over four epochs, with each epoch processing the complete training set. A decrease in loss with each epoch was observed, showing that the model’s predictions improved with each iteration. 
