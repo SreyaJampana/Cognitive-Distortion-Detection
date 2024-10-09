@@ -19,23 +19,26 @@ The cognitive distortions data set being used is "Detecting Cognitive Distortion
 
 Prior to training the model, data pre-processing (tokenization and vectorization) was necessary to provide the model with input which was easier to understand. Since different types of models were experimented with, the tokenization process slightly differed according to the approach.
 
-To prepare the data for the rule-based and logistic regression model, standard level tokenization was used. This was achieved using TFIDF Vectorization. The entire corpus of text is transformed into a matrix of numerical values, where each row corresponds to a document and each column corresponds to a word from the vocabulary, with the values representing the TF-IDF score of each word in the document. For the BERT models, a more advanced WordPiece Tokenizer[<sup>8</sup>](#bookmark=kix.6c9uulnb8f82) was used. This tokenizer creates sub-words and keeps context in mind by preserving the relationship between words. ![](Aspose.Words.422cb70a-a769-4387-8005-5d7d508dd126.001.png)
+To prepare the data for the rule-based and logistic regression model, standard level tokenization was used. This was achieved using TFIDF Vectorization. The entire corpus of text is transformed into a matrix of numerical values, where each row corresponds to a document and each column corresponds to a word from the vocabulary, with the values representing the TF-IDF score of each word in the document. For the BERT models, a more advanced WordPiece Tokenizer[<sup>8</sup>](#bookmark=kix.6c9uulnb8f82) was used. This tokenizer creates sub-words and keeps context in mind by preserving the relationship between words. 
+
+|*Figure 1.1: Data Distribution*|
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 001](https://github.com/user-attachments/assets/9f00b124-a7b9-4917-86f9-4e5603a9a5b9)
 
 Another important step in pre-processing was over sampling the data. Since the distribution of labels was not even in the cognitive distortions data set, the other labels had to be increased. This was achieved using RandomOverSampler which duplicates random instances of the minority classes. 
 
 **Training the Model**
-
-![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 001](https://github.com/user-attachments/assets/e3d50b2d-f52d-4914-a895-a8972bd0ccf7)
-
 
 To build the model with the highest accuracy, several training approaches were tested. 4 different models were built, from which the one with the highest accuracy was used. The primary model was a simple rule-based one. The rule-based model operated on key-words found for each cognitive distortion. The key words were identified using WordClouds. However due to the lack of context and simplicity of the model, the accuracy was extremely low. The next model tested was logistic regression.[<sup>9</sup>](#bookmark=kix.205qec7v82im). This model is typically advantageous in distinguishing between two classes. Hence, for training a model on cognitive distortions it was ineffective and only had an accuracy of 24%. 
 
 Finally, BERT was used to identify cognitive distortions. In the first test DistillBert was used with the original data set in order to save on RAM usage. However, the accuracy remained low at 35%. Then the data was oversampled, increasing the data points. A full fledged BERT-base architecture was also utilized. The AdamW optimizer was employed with a learning rate of 5e-5, a crucial hyperparameter that governs the model's learning pace. A learning rate scheduler was also utilized to adjust the rate during training for enhanced convergence. The model was trained over four epochs, with each epoch processing the complete training set. A decrease in loss with each epoch was observed, showing that the model’s predictions improved with each iteration. 
 
 This approach drastically improved the F-1 score to 54%. A summary of the models tested is given below. 
-|*Table 1.3: Full Accuracy Report for BERT-base* |*1.2: Accuracy of Trained Models*|
-| :-: | :-: |
-|![](Aspose.Words.422cb70a-a769-4387-8005-5d7d508dd126.002.png)|![](Aspose.Words.422cb70a-a769-4387-8005-5d7d508dd126.003.png)|
+
+|*Table 1.3: Full Accuracy Report for BERT-base*|
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 002](https://github.com/user-attachments/assets/c5b4dc02-d9a9-4b8b-ab2c-bd8ae4f4ee8d)
+
+|*1.2: Accuracy of Trained Models*
+|![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 003](https://github.com/user-attachments/assets/770cb7e1-479b-45a2-b64b-dcee64bce5fd)
 
 **Inferring Cognitive Distortions in Suicide-Risk Dataset**
 
@@ -46,14 +49,21 @@ Using the dataset annotated with both cognitive distortions and suicide classifi
 
 To understand the distribution of cognitive distortions within the dataset, a pie chart was used (Figure 1.3). This chart showed that the majority of texts lacked cognitive distortions. However, within the set of cognitive distortions the most common ones were “overgeneralization”, “mental filtering” and “fortune telling”. This indicates that these might be the most dangerous or risky distortions amongst teens since they are interrelated with suicide. A proportion bar chart (Figure 1.4) was also generated to show the percentage of cognitive distortions present in suicidal versus non-suicidal texts. The diagram highlighted that certain distortions such as “labeling” were not as risky and found commonly within non-suicidal cases. However, certain cognitive distortions such as “mental filtering” and overgeneralization were high indicators of suicide risk. Word clouds (Figure 1.5) were also created to visualize the most frequently occurring terms within suicidal and non-suicidal texts, offering an intuitive understanding of the linguistic features that may differentiate the two groups. It is evident that suicidal texts have more repetition of words, while non-suicidal thoughts use a wider dictionary of words. 
 
-|<p>![](Aspose.Words.422cb70a-a769-4387-8005-5d7d508dd126.004.png)</p><p>*Figure 1.3*</p>|<p>![](Aspose.Words.422cb70a-a769-4387-8005-5d7d508dd126.005.png)</p><p>*Figure 1.4*</p><p></p>|<p>![ref1]</p><p>![ref2]</p><p>*Figure 1.5*</p><p></p>|
-| :- | :- | :- |
+*Figure 1.3*
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 004](https://github.com/user-attachments/assets/ee726507-2630-43cf-b93d-afa9fa66d73b)
+
+*Figure 1.4*
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 007](https://github.com/user-attachments/assets/5734cf19-42c4-4cd4-9299-d9bdf6ca7db9)
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 006](https://github.com/user-attachments/assets/9cfd41e0-3b2a-4616-a6f1-86d456b26fba)
+
+*Figure 1.5*
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 005](https://github.com/user-attachments/assets/83e8c95e-1c06-477c-8474-12e8505fb547)
+
 
 Finally, a bar chart (Figure 1.6) compares the presence of cognitive distortions overall in suicidal vs non-suicidal texts. This chart shows that suicidal texts have almost double the number of cognitive distortions. This clearly suggests that cognitive distortions are heavy indicators of suicide-risk.
 
-|![](Aspose.Words.422cb70a-a769-4387-8005-5d7d508dd126.008.png)|
-| :- |
 |*Figure 1.6*|
+![Aspose Words 422cb70a-a769-4387-8005-5d7d508dd126 008](https://github.com/user-attachments/assets/bc3aa23e-855f-4442-bb9f-8261fb0ccc04)
 
 Overall, these visualizations demonstrate a clear relationship between cognitive distortions and suicidal risk, suggesting that certain distortions may be indicative of heightened suicide risk. Future work could leverage these insights to develop targeted interventions aimed at reducing cognitive distortions in at-risk populations, potentially mitigating suicidal ideation and behavior.
 
